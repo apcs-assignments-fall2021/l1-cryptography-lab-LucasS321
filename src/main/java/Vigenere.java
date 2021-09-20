@@ -1,14 +1,83 @@
 import java.util.Scanner;
 
 public class Vigenere {
+    public static char encryptCaesarLetter(char ch, int key) {
+        if ((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z')) {
+            int NewKey =  (ch + key);
+            if ((ch >= 'A' && ch <= 'Z')) {
+                while (!((NewKey >= 'A' && NewKey <= 'Z'))) {
+                    NewKey = NewKey - (26);
+                }
+            }
+            if ((ch >= 'a' && ch <= 'z')) {
+                while (!((NewKey >= 'a' && NewKey <= 'z'))) {
+                    NewKey = NewKey - (26);
+                }
+            }
+            return (char) NewKey;
+        } else {
+            return ch;
+        }
+    }
+
+    public static char decryptCaesarLetter(char ch, int key) {
+        if ((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z')) {
+            int NewKey =  (ch - key);
+            if ((ch >= 'A' && ch <= 'Z')) {
+                while (!((NewKey >= 'A' && NewKey <= 'Z'))) {
+                    NewKey = NewKey + (26);
+                }
+            }
+            if ((ch >= 'a' && ch <= 'z')) {
+                while (!((NewKey >= 'a' && NewKey <= 'z'))) {
+                    NewKey = NewKey + (26);
+                }
+            }
+            return (char) NewKey;
+        } else {
+            return ch;
+        }
+    }
+    public static int getLetterKey(char ch) {
+        if (ch >= 'a' && ch <= 'z') {
+            return (ch-'a');
+        }
+        if (ch >= 'A' && ch <= 'Z') {
+            return (ch-'A');
+        } else {
+            return -1;
+        }
+    }
     public static String encryptVigenere(String message, String key) {
-        return message;
-        // REPLACE THIS WITH YOUR CODE
+        String retmessage="";
+        int keyspot = 0;
+         for (int i = 0; i < message.length();i++) {
+             retmessage = retmessage+encryptCaesarLetter(message.charAt(i),getLetterKey(key.charAt(keyspot)));
+             if ((message.charAt(i) >= 'a' && message.charAt(i) <= 'z') || (message.charAt(i) >= 'A' && message.charAt(i) <= 'Z')) {
+                 if (keyspot == key.length() - 1) {
+                     keyspot = 0;
+                 } else {
+                     keyspot += 1;
+                 }
+             }
+         }
+         return retmessage;
     }
 
     public static String decryptVigenere(String message, String key) {
-        return message;
-        // REPLACE THIS WITH YOUR CODE
+        String retmessage="";
+        int keyspot = 0;
+        for (int i = 0; i < message.length();i++) {
+            retmessage = retmessage+decryptCaesarLetter(message.charAt(i),getLetterKey(key.charAt(keyspot)));
+            if ((message.charAt(i) >= 'a' && message.charAt(i) <= 'z') || (message.charAt(i) >= 'A' && message.charAt(i) <= 'Z')) {
+                if (keyspot == key.length() - 1) {
+                    keyspot = 0;
+                } else {
+                    keyspot += 1;
+                }
+            }
+        }
+        return retmessage;
     }
 
 
